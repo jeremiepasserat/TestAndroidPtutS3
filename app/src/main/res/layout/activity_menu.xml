@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.chrx.testaixenbus.Applications.Menu">
+
+    <Button
+        android:id="@+id/itineraire"
+        android:layout_width="189dp"
+        android:layout_height="201dp"
+        android:layout_marginEnd="19dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="48dp"
+        android:background="@mipmap/itineraire"
+        app:layout_constraintEnd_toStartOf="@+id/arrets"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/arrets"
+        android:layout_width="189dp"
+        android:layout_height="201dp"
+        android:background="@mipmap/arrets"
+        android:text="@string/arrets"
+        app:layout_constraintBaseline_toBaselineOf="@+id/itineraire"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/itineraire" />
+
+    <Button
+        android:id="@+id/lignes"
+        android:layout_width="382dp"
+        android:layout_height="114dp"
+        android:layout_marginTop="40dp"
+        android:background="@mipmap/ligne"
+        android:text="@string/ligne"
+        app:layout_constraintStart_toStartOf="@+id/itineraire"
+        app:layout_constraintTop_toBottomOf="@+id/arrets" />
+
+    <Button
+        android:id="@+id/informations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="28dp"
+        android:background="@mipmap/informations"
+        android:text="@string/informations"
+        app:layout_constraintStart_toStartOf="@+id/lignes"
+        app:layout_constraintTop_toBottomOf="@+id/lignes" />
+
+
+</android.support.constraint.ConstraintLayout>

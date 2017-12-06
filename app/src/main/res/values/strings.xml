@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Application Aix en Bus</string>
+    <string name="itineraire">Itineraire</string>
+    <string name="arrets">Arrets de Bus</string>
+    <string name="ligne">Lignes de Bus</string>
+    <string name="informations">Informations</string>
+    <string name="bug">Signaler un Bug</string>
+</resources>

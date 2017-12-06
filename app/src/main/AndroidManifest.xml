@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.chrx.testaixenbus">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/icone"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/icone_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Applications.Menu">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Applications.Itineraire" android:label="Non"> </activity>
+        <activity android:name=".Applications.Arret" android:label="Arret"> </activity>
+        <activity android:name=".Applications.Informations" android:label="Informations"> </activity>
+        <activity android:name=".Applications.Ligne" android:label="Ligne"> </activity>
+        <activity android:name=".Applications.Bug" android:label="Bug"> </activity>
+
+    </application>
+
+</manifest>
