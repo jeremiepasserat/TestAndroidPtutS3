@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Applications.Itineraire" android:label="Non"> </activity>
+        <activity android:name=".Applications.Itineraire" android:label="Itineraire"> </activity>
         <activity android:name=".Applications.Arret" android:label="Arret"> </activity>
         <activity android:name=".Applications.Informations" android:label="Informations"> </activity>
         <activity android:name=".Applications.Ligne" android:label="Ligne"> </activity>
