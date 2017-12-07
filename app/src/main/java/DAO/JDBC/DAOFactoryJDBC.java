@@ -18,7 +18,7 @@ public class DAOFactoryJDBC implements DAOFactory {
     }
 
     @Override
-    public DAOArret createDAOArret() {
+    public DAOArretJDBC createDAOArret() {
         return new DAOArretJDBC();
     }
 }
