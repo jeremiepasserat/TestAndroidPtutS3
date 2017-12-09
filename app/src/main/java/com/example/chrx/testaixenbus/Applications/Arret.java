@@ -107,8 +107,17 @@ public class Arret extends AppCompatActivity {
                 Intent intent = new Intent(Arret.this, Menu.class);
                 startActivity(intent);
 
-            }});}
+            }});
 
+    Button button2 = findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+            Intent intent = new Intent(Arret.this, Carte.class);
+            startActivity(intent);
+
+        }});}
 
 
     public static ArrayList<String> Test (){

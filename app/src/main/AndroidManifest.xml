@@ -21,7 +21,7 @@
         <activity android:name=".Applications.Informations" android:label="Informations"> </activity>
         <activity android:name=".Applications.Ligne" android:label="Ligne"> </activity>
         <activity android:name=".Applications.Bug" android:label="Bug"> </activity>
-
+        <activity android:name=".Applications.Carte" android:label="Carte"> </activity>
 
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
