@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.chrx.testaixenbus.MapsActivity;
 import com.example.chrx.testaixenbus.R;
 
 import java.io.BufferedReader;
@@ -114,7 +115,7 @@ public class Arret extends AppCompatActivity {
         @Override
         public void onClick(View view) {
 
-            Intent intent = new Intent(Arret.this, Carte.class);
+            Intent intent = new Intent(Arret.this, MapsActivity.class);
             startActivity(intent);
 
         }});}
