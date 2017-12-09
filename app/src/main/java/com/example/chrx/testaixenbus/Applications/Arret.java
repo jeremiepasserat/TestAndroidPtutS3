@@ -37,7 +37,7 @@ public class Arret extends AppCompatActivity {
         List exemple = new ArrayList();
 
         ArrayList<String> test = Test();
-        ArrayList<String> test2 = TestLigne();
+
 
         for(int c = 0; c < test.size(); ++c) {
             exemple.add(test.get(c));
@@ -68,37 +68,7 @@ public class Arret extends AppCompatActivity {
 
             }});}
 
-    public static ArrayList<String> TestLigne (){
-        String ligne_url = "http://ptutequipe2g1.alwaysdata.net/lignes_arret.php";
-        ArrayList<String> resultats = new ArrayList<>();
 
-
-        try {
-            URL url = new URL(ligne_url);
-            HttpURLConnection huc = (HttpURLConnection) url.openConnection();
-            huc.setRequestMethod("POST");
-            huc.setDoInput(true);
-            huc.setDoOutput(true);
-            InputStream inputStream = huc.getInputStream();
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-            String line;
-            while ((line = bufferedReader.readLine()) != null)
-            {
-                resultats.add(line);
-            }
-
-            bufferedReader.close();
-            inputStream.close();
-            huc.disconnect();
-
-
-        } catch (MalformedURLException e) {
-            System.out.println("Malformed URL Exception");
-        }catch (IOException e) {
-            System.out.println("IOException");
-        }
-        return resultats;
-    }
 
     public static ArrayList<String> Test (){
         String arret_url = "http://ptutequipe2g1.alwaysdata.net/all_arret.php";
