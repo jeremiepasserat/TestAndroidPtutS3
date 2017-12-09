@@ -51,7 +51,6 @@ public class Arret extends AppCompatActivity {
 
 
         for(int c = 0; c < test.size(); ++c) {
-            System.out.println("Oui mais non :");
             if (test.get(c).charAt(0) == '1')
                 etatArret.setText("Arret disponible");
             else
@@ -190,6 +189,8 @@ public class Arret extends AppCompatActivity {
         }
         return resultats;
     }
+
+
         //Intent intent = new Intent(Menu.this, Itineraire.class);
         //startActivity(intent);
     }

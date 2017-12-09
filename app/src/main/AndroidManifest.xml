@@ -41,9 +41,6 @@
         <activity
             android:name=".Applications.Bug"
             android:label="Bug"></activity>
-        <activity
-            android:name=".Applications.Carte"
-            android:label="Carte"></activity>
 
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
