@@ -48,7 +48,6 @@ public class Ligne extends AppCompatActivity {
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-        String prout = spinner.getSelectedItem().toString();
 
 
 
