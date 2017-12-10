@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Application Aix en Bus</string>
+    <string name="app_name">Aix en Bus</string>
     <string name="itineraire">Itineraire</string>
     <string name="arrets">Arrets de Bus</string>
     <string name="ligne">Lignes de Bus</string>
@@ -8,4 +8,7 @@
     <string name="bug">Signaler un Bug</string>
     <string name="tarif">Ticket unité : 1€20 Ticket 2 voyages : 2€10 \n Ticket 10 voyages : 8€ Carte pass Provence : 5€ \n Abonnement mensuel : 10€ Abonnement Jeune Plus : 100€ \n Abonnement annuel : 260€"</string>
     <string name="title_activity_maps">Map</string>
+    <string name="lbug">Localisation du Bug</string>
+    <string name="dbug">Description du Bug</string>
+    <string name="transmettre">Transmettre</string>
 </resources>

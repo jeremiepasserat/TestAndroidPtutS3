@@ -1,13 +1,18 @@
 package com.example.chrx.testaixenbus;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
+import com.example.chrx.testaixenbus.Applications.Arret;
+import com.example.chrx.testaixenbus.Applications.Menu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.BufferedReader;
@@ -100,15 +105,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
   //          System.out.println(nomArrets.get(i));
           //  mMap.addMarker(new MarkerOptions().position(latlng));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
-
-
         }
 
         // Ajoute un marqueur à l'IUT et zoome dessus
         LatLng iut = new LatLng(43.514591, 5.451379);
-        mMap.addMarker(new MarkerOptions().position(iut).title("Vous êtes ici"));
+        mMap.addMarker(new MarkerOptions().position(iut).title("Vous êtes ici").snippet("Vous êtes ici"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(iut));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(iut, 14));
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                Intent intent = new Intent(MapsActivity.this, Arret.class);
+                startActivity(intent);
+                //Toast.makeText(MapsActivity.this, marker.getTitle(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     public ArrayList<String> getLatitude(ArrayList<String> coordonnees) {

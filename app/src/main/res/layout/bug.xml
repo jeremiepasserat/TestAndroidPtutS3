@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,13 +9,55 @@
         android:id="@+id/accueil"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="66dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/index2"
-        app:layout_constraintBottom_toTopOf="@+id/editText2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.054"
+        app:layout_constraintBottom_toTopOf="@+id/lbug"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/lbug"
+        android:layout_width="336dp"
+        android:layout_height="77dp"
+        android:layout_marginBottom="288dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+
+        android:text="@string/lbug"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/accueil"
+        app:layout_constraintVertical_bias="0.186" />
+
+    <EditText
+        android:id="@+id/dbug"
+        android:layout_width="336dp"
+        android:layout_height="77dp"
+        android:layout_marginBottom="202dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/dbug"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lbug"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/ebug"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="122dp"
+        android:text="@string/transmettre"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dbug"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>
