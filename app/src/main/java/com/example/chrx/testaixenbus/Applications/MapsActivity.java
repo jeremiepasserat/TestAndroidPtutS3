@@ -1,37 +1,44 @@
-package com.example.chrx.testaixenbus;
+package com.example.chrx.testaixenbus.Applications;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.location.LocationProvider;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.widget.Toast;
 
-import com.example.chrx.testaixenbus.Applications.Arret;
-import com.example.chrx.testaixenbus.Applications.Menu;
+import com.example.chrx.testaixenbus.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private Location mLastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +48,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
-        ArrayList<String> coordonnees = getCoordonnees();
-
     }
 
     public static ArrayList<String> getCoordonnees() {
@@ -104,8 +108,108 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.addMarker(new MarkerOptions().position(latlng).title(nomArrets.get(i)));
   //          System.out.println(nomArrets.get(i));
           //  mMap.addMarker(new MarkerOptions().position(latlng));
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+          //  mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
         }
+
+        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) &&
+                (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
+                        PackageManager.PERMISSION_GRANTED)) {
+
+        }
+        else {
+            ActivityCompat.requestPermissions(this, new String[] {
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION },
+                    1);
+        }
+
+       LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
+
+        //ArrayList<LocationProvider> providers = new ArrayList<>();
+
+      //  List<String> names = locationManager.getProviders(true);
+
+
+   //     for(String name : names)
+         //   providers.add(locationManager.getProvider(name));
+//try {
+  //  LocationProvider locationProvider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
+//}catch (NullPointerException e)
+//{
+  //  e.printStackTrace();
+
+
+//}
+
+     //   System.out.println("Test");
+
+       // googleMap.setMyLocationEnabled(true);
+
+       try
+
+    {
+        System.out.println("Test");
+        Location location = new Location(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
+        LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
+        mMap.addMarker(new MarkerOptions().position(position).title("Vous êtes ici").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+    }
+ catch (NullPointerException e)
+        {
+            e.printStackTrace();
+        }
+
+
+
+        try {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 1, new LocationListener() {
+
+
+
+                @Override
+
+                public void onStatusChanged(String provider, int status, Bundle extras) {
+
+
+                }
+
+
+                @Override
+
+                public void onProviderEnabled(String provider) {
+
+
+                }
+
+
+                @Override
+
+                public void onProviderDisabled(String provider) {
+
+
+                }
+
+
+                @Override
+
+                public void onLocationChanged(Location location) {
+                    Log.d("GPS", "Latitude " + location.getLatitude() + " et longitude " + location.getLongitude());
+                    LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
+                    mMap.addMarker(new MarkerOptions().position(position).title("Vous êtes ici").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+                }
+
+            });
+        }catch (SecurityException e)
+        {
+            e.printStackTrace();
+        }
+
+
+
+
+
 
         // Ajoute un marqueur à l'IUT et zoome dessus
         LatLng iut = new LatLng(43.514591, 5.451379);
