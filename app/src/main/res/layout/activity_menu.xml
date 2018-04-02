@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="3dp"
         android:background="@drawable/arrets"
         app:layout_constraintBottom_toTopOf="@+id/itineraire"
         app:layout_constraintEnd_toStartOf="@+id/lignes"
@@ -26,6 +26,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="5dp"
+        android:layout_marginEnd="2dp"
         android:background="@drawable/ligne"
         app:layout_constraintBottom_toTopOf="@+id/itineraire"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,26 +35,36 @@
 
     <Button
         android:id="@+id/itineraire"
-        android:layout_width="0dp"
+        android:layout_width="384dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="149dp"
         android:background="@drawable/iti"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/lignes"
+        app:layout_constraintStart_toStartOf="@+id/lignes"
         app:layout_constraintTop_toBottomOf="@+id/lignes" />
 
     <Button
         android:id="@+id/informations"
-        android:layout_width="384dp"
-        android:layout_height="89dp"
-        android:layout_marginTop="5dp"
+        android:layout_width="0dp"
+        android:layout_height="79dp"
         android:background="@drawable/info"
+        app:layout_constraintBottom_toTopOf="@+id/notifications"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/itineraire" />
 
+    <ToggleButton
+        android:id="@+id/notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="7dp"
+        android:textOff="@string/notificationsOff"
+        android:textOn="@string/notificationsOn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/informations" />
 
 
 </android.support.constraint.ConstraintLayout>

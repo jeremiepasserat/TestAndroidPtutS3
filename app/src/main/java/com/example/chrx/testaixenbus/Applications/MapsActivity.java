@@ -41,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private Location mLastLocation;
+    private Marker oldmarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,11 +163,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
        try
 
     {
-        System.out.println("Test");
         Location location = new Location(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
         LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
-        mMap.addMarker(new MarkerOptions().position(position).title("Vous êtes ici").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        oldmarker = mMap.addMarker(new MarkerOptions().position(position).title("Vous êtes ici").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 14));
     }
  catch (NullPointerException e)
         {
@@ -209,7 +210,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 public void onLocationChanged(Location location) {
                     Log.d("GPS", "Latitude " + location.getLatitude() + " et longitude " + location.getLongitude());
                     LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
-                    mMap.addMarker(new MarkerOptions().position(position).title("Vous êtes ici").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                    oldmarker.remove();
+                    oldmarker = mMap.addMarker(new MarkerOptions().position(position).title("Vous êtes ici").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
                 }
 
@@ -224,18 +226,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-        // Ajoute un marqueur à l'IUT et zoome dessus
+    /*    // Ajoute un marqueur à l'IUT et zoome dessus
         LatLng iut = new LatLng(43.514591, 5.451379);
         mMap.addMarker(new MarkerOptions().position(iut).title("Vous êtes ici").snippet("Vous êtes ici"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(iut));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(iut, 14));
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(iut, 14));*/
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                Intent intent = new Intent(MapsActivity.this, Arret.class);
-                startActivity(intent);
-                //Toast.makeText(MapsActivity.this, marker.getTitle(), Toast.LENGTH_LONG).show();
+               // Intent intent = new Intent(MapsActivity.this, Arret.class);
+               // startActivity(intent);
+                Toast.makeText(MapsActivity.this, marker.getTitle(), Toast.LENGTH_LONG).show();
             }
         });
     }

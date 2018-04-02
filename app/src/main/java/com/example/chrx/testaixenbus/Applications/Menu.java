@@ -6,10 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.example.chrx.testaixenbus.R;
 
 public class Menu extends AppCompatActivity {
+
+    boolean notifications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,17 @@ public class Menu extends AppCompatActivity {
                 startActivity(intent);
 
             }});
+
+        final ToggleButton notifications = findViewById(R.id.notifications);
+        notifications.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (notifications.isChecked()) {
+                    Toast.makeText(Menu.this, "Notifications activées", Toast.LENGTH_LONG).show();
+                }
+                Toast.makeText(Menu.this, "Notifications desactivées", Toast.LENGTH_LONG).show();
+                }
+        });
         //Intent intent = new Intent(Menu.this, Itineraire.class);
         //startActivity(intent);
     }

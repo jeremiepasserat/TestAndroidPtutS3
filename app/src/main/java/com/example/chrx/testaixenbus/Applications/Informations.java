@@ -23,7 +23,9 @@ public class Informations extends AppCompatActivity {
         TextView infos = findViewById(R.id.infos);
         TextView tarif = findViewById(R.id.tarifs);
 
-        tarif.setText(Html.fromHtml(getResources().getString(R.string.tarif)));
+        infos.setText(R.string.infos1);
+
+        tarif.setText(R.string.tarif);
         Button button = findViewById(R.id.accueil);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
