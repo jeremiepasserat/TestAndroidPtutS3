@@ -348,6 +348,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return arrets;
     }
 
+  
     private void createNotification(String message) throws NullPointerException{
         final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         final Intent intentNotification = new Intent(this, MapsActivity.class);
