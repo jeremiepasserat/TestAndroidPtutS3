@@ -19,4 +19,5 @@
     <string name="header">HEADING</string>
     <string name="prev">Précédent</string>
     <string name="next">Suivant</string>
+    <string name="notification_title">Aix en Bus</string>
 </resources>

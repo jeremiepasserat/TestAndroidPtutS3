@@ -1,6 +1,9 @@
 package com.example.chrx.testaixenbus.Applications;
 
 import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -40,17 +43,28 @@ import java.util.List;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private Location mLastLocation;
-    private Marker oldmarker;
+    private String arretnotifie = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+
+            mapFragment.getMapAsync(this);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.ACCESS_FINE_LOCATION}, 1
+            );
+
+        }
 
         Button button = findViewById(R.id.accueil);
         button.setOnClickListener(new View.OnClickListener() {
@@ -110,9 +124,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Recupere les coordonnées ordonnées de la BD
-        ArrayList<String> latitudes = getLatitude(getCoordonnees());
-        ArrayList<String> longitudes = getLongitude(getCoordonnees());
-        ArrayList<String> nomArrets = getNomArret(getCoordonnees());
+        final ArrayList<String> latitudes = getLatitude(getCoordonnees());
+        final ArrayList<String> longitudes = getLongitude(getCoordonnees());
+        final ArrayList<String> nomArrets = getNomArret(getCoordonnees());
 
 
 
@@ -125,7 +139,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
           //  mMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
         }
 
-        if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
+     /*   if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) &&
                 (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
                         PackageManager.PERMISSION_GRANTED)) {
@@ -136,7 +150,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION },
                     1);
-        }
+        }*/
 
        LocationManager locationManager = (LocationManager)getSystemService(Context.LOCATION_SERVICE);
 
@@ -165,14 +179,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     {
         Location location = new Location(locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER));
         LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
-        oldmarker = mMap.addMarker(new MarkerOptions().position(position).title("Vous êtes ici").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+        mMap.setMyLocationEnabled(true);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(position, 14));
+        if (Menu.getStateNotifs())
+        getArretAMoinsdeDixMetres(position, latitudes, longitudes, nomArrets);
     }
  catch (NullPointerException e)
         {
             e.printStackTrace();
-        }
+        }catch (SecurityException e)
+       {
+           e.printStackTrace();
+       }
 
 
 
@@ -210,13 +229,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 public void onLocationChanged(Location location) {
                     Log.d("GPS", "Latitude " + location.getLatitude() + " et longitude " + location.getLongitude());
                     LatLng position = new LatLng(location.getLatitude(), location.getLongitude());
-                    oldmarker.remove();
-                    oldmarker = mMap.addMarker(new MarkerOptions().position(position).title("Vous êtes ici").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+                   // oldmarker.remove();
+                   // oldmarker = mMap.addMarker(new MarkerOptions().position(position).title("Vous êtes ici").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(position));
+                    if (Menu.getStateNotifs())
+                    getArretAMoinsdeDixMetres(position, latitudes, longitudes, nomArrets);
+
                 }
 
             });
         }catch (SecurityException e)
+        {
+            e.printStackTrace();
+        }catch (NullPointerException e)
         {
             e.printStackTrace();
         }
@@ -323,6 +348,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         return arrets;
     }
 
+  
+    private void createNotification(String message) throws NullPointerException{
+        final NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        final Intent intentNotification = new Intent(this, MapsActivity.class);
+        final PendingIntent pendingIntent = PendingIntent.getActivity(this,1 , intentNotification,
+                PendingIntent.FLAG_ONE_SHOT);
 
+        Notification.Builder builder = new Notification.Builder(this)
+                .setWhen(System.currentTimeMillis())
+                .setTicker("U just got a notif braw")
+                .setSmallIcon(R.mipmap.ic_launcher_round)
+                .setContentTitle(getResources().getString(R.string.notification_title))
+                .setContentText(message)
+                .setContentIntent(pendingIntent)
+                .setVibrate(new long[] {0,200,150,200});
+
+        notificationManager.notify(1, builder.build());
+    }
+
+    public void getArretAMoinsdeDixMetres (LatLng position, ArrayList<String> latitudes, ArrayList<String> longitudes, ArrayList<String> nomArrets)
+    {
+        String arretsadistance = "";
+
+
+        float [] results = new float[2];
+
+
+        //Toast.makeText(Navigation.this,Double.toString(position.latitude),Toast.LENGTH_SHORT).show();
+        for (int i = 0; i<latitudes.size(); ++i)
+        {
+            Location.distanceBetween(position.latitude, position.longitude, Double.parseDouble(latitudes.get(i)), Double.parseDouble(longitudes.get(i)), results );
+            //Toast.makeText(Navigation.this, Float.toString(results[0]),Toast.LENGTH_SHORT).show();
+
+            if (results[0] < 1000 && !arretnotifie.equals(nomArrets.get(i)))
+            {
+
+                arretnotifie = nomArrets.get(i);
+                createNotification(arretnotifie + " à moins de 100 mètres");
+                //double lat_encours = Double.parseDouble(latitudes.get(i));
+                //double long_encours = Double.parseDouble(longitudes.get(i));
+                break;
+            }
+        }
+
+        //Toast.makeText(Navigation.this, arretnotifie, Toast.LENGTH_SHORT).show();
+    }
 }
 
