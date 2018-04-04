@@ -13,7 +13,11 @@ import com.example.chrx.testaixenbus.R;
 
 public class Menu extends AppCompatActivity {
 
-    boolean notifications;
+    static boolean setNotifs = false;
+
+    public static boolean getStateNotifs (){
+        return setNotifs;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,9 +74,14 @@ public class Menu extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (notifications.isChecked()) {
+                    setNotifs = true;
                     Toast.makeText(Menu.this, "Notifications activées", Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(Menu.this, "Notifications desactivées", Toast.LENGTH_LONG).show();
+                else
+                {
+                    setNotifs = false;
+                    Toast.makeText(Menu.this, "Notifications desactivées", Toast.LENGTH_LONG).show();
+                }
                 }
         });
         //Intent intent = new Intent(Menu.this, Itineraire.class);

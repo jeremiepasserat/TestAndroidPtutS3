@@ -14,4 +14,5 @@
     <string name="transmettre">Transmettre</string>
     <string name="notificationsOn">Désactiver notifications</string>
     <string name="notificationsOff">Activer notifications</string>
+    <string name="notification_title">Aix en Bus</string>
 </resources>
