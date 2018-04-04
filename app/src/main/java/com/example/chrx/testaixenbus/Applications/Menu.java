@@ -1,7 +1,10 @@
 package com.example.chrx.testaixenbus.Applications;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.StrictMode;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,13 +15,23 @@ import android.widget.ToggleButton;
 import com.example.chrx.testaixenbus.R;
 
 public class Menu extends AppCompatActivity {
-
+    
     boolean notifications;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        boolean previouslyStarted = prefs.getBoolean(getString(R.string.pref_previously_started), false);
+        if(!previouslyStarted) {
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putBoolean(getString(R.string.pref_previously_started), Boolean.TRUE);
+            edit.apply();
+            showTutorial();
+        }
+        
 
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -78,4 +91,16 @@ public class Menu extends AppCompatActivity {
         //Intent intent = new Intent(Menu.this, Itineraire.class);
         //startActivity(intent);
     }
+
+    private void showTutorial() {
+        Intent intent = Tuto.makeIntent(Menu.this);
+        startActivity(intent);
+
+    }
+
+    public static Intent makeIntent(Context context) {
+        return new Intent(context, Menu.class);
+    }
+
+
 }

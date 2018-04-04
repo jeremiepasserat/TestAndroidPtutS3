@@ -14,4 +14,9 @@
     <string name="transmettre">Transmettre</string>
     <string name="notificationsOn">Désactiver notifications</string>
     <string name="notificationsOff">Activer notifications</string>
+    <string name="content">Contenu du texte !</string>
+    <string name="pref_previously_started" />
+    <string name="header">HEADING</string>
+    <string name="prev">Précédent</string>
+    <string name="next">Suivant</string>
 </resources>
